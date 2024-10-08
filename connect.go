@@ -10,10 +10,8 @@ import (
 	"github.com/ssh-connection-manager/json"
 )
 
-func Ssh(c *json.Connections, alias string, fullPath string, fileName string, fileKey string) error {
-	fileConnect := file.GetFullPath(fullPath, fileName)
-
-	data, err := file.ReadFile(fileConnect)
+func Ssh(c *json.Connections, alias string, fl file.File) error {
+	data, err := fl.ReadFile()
 	if err != nil {
 		return err
 	}
@@ -23,7 +21,7 @@ func Ssh(c *json.Connections, alias string, fullPath string, fileName string, fi
 		return err
 	}
 
-	err = c.SetDecryptData(fullPath, fileKey)
+	err = c.SetDecryptData()
 	if err != nil {
 		return err
 	}
